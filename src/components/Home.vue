@@ -2,10 +2,10 @@
     <v-container>
         <v-layout row wrap class="mb-2">
             <v-flex  xs12 sm6 class="text-xs-center text-lg-right">
-                <v-btn class="blue lighten-1" large router to="/meetups">Explore Meetups</v-btn>
+                <v-btn class="blue lighten-1" large to="/meetups">Explore Meetups</v-btn>
             </v-flex>
             <v-flex class="text-xs-center text-lg-left" xs12 sm6>
-                <v-btn class="blue lighten-1" large router to="/meetups/new">Explore Meetups</v-btn>
+                <v-btn class="blue lighten-1" large to="/meetups/new">Explore Meetups</v-btn>
             </v-flex>
         </v-layout>
             <v-layout wrap row class="mt-3">
@@ -17,6 +17,8 @@
                     :src="meetup.imageUrl"
                     reverse-transition="fade"
                     transition="fade"
+                    style="cursor:pointer"
+                    @click.native.stop="onLoadMeetup(meetup.id)"
                     >
                     <div class="title">
                         {{meetup.title}}
@@ -42,6 +44,12 @@ export default {
                 { imageUrl: 'https://www.planwallpaper.com/static/images/4442617-hd-wallpapers.jpg', id: '1234569', title: 'a small text'}
             ]
         }
+    },
+    methods: {
+        onLoadMeetup (id){
+         this.$router.push('/meetups/' +id)
+        }
+
     }
 }
 </script>

@@ -6,7 +6,6 @@
         <v-list-tile 
           v-for="Item in menuItems"
           :key="Item.title"
-          router
           :to="Item.link">
           <v-list-tile-action>
             <v-icon>{{Item.icon}}</v-icon>
@@ -17,7 +16,7 @@
     </v-navigation-drawer>
 
     <v-toolbar  class="pink lighten-1">
-      <v-toolbar-side-icon class="hidden-sm-and-up" @click.native.stop="sideMenu=!sideMenu"></v-toolbar-side-icon>
+      <v-toolbar-side-icon class="hidden-sm-and-up" @click="sideMenu=!sideMenu"></v-toolbar-side-icon>
       <v-toolbar-title><router-link to="/" tag="span" style="cursor: pointer">Meetup</router-link></v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items 
@@ -26,7 +25,6 @@
          class="hidden-xs-only">
         <v-btn
           flat
-          router
           :to="item.link">
           <v-icon left >{{item.icon}}</v-icon>
           {{item.title}}
