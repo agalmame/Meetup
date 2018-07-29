@@ -1,7 +1,7 @@
 <template>
   <v-app>
 
-    <v-navigation-drawer temporary="true" fixed v-model="sideMenu" class="hidden-sm-and-up">
+    <v-navigation-drawer  fixed v-model="sideMenu" class="hidden-sm-and-up">
        <v-list>
         <v-list-tile 
           v-for="Item in menuItems"
@@ -16,7 +16,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-toolbar fixed class="pink lighten-1">
+    <v-toolbar  class="pink lighten-1">
       <v-toolbar-side-icon class="hidden-sm-and-up" @click.native.stop="sideMenu=!sideMenu"></v-toolbar-side-icon>
       <v-toolbar-title><router-link to="/" tag="span" style="cursor: pointer">Meetup</router-link></v-toolbar-title>
       <v-spacer></v-spacer>
@@ -25,7 +25,7 @@
          :key="item.title"
          class="hidden-xs-only">
         <v-btn
-          flat="true"
+          flat
           router
           :to="item.link">
           <v-icon left >{{item.icon}}</v-icon>
@@ -47,7 +47,7 @@ export default {
       sideMenu:false,
       menuItems:[
         { icon: 'supervisor_account', title: 'View Meetup' ,link: '/meetups'},
-        { icon: 'room', title: 'Organize!',link: '/meetup/new'},
+        { icon: 'room', title: 'Organize!',link: '/meetups/new'},
         { icon: 'person',title: 'Profile',link: '/profile'},
         { icon: 'face',title: 'Sign up',link: '/signup'},
         { icon: 'lock_open',title: 'Sign out',link: '/signin'}
