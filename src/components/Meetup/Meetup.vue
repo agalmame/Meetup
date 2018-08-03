@@ -4,15 +4,15 @@
             <v-flex>
                 <v-card>
                     <v-card-title>
-                        <h3 class="primary--text">Meetup 01</h3>
+                        <h3 class="primary--text">{{meetup.title}}</h3>
                     </v-card-title>
                     <v-card-media
-                    src="https://www.planwallpaper.com/static/images/2015-wallpaper_111525594_269.jpg"
+                    :src="meetup.imageUrl"
                     height="300px"
                     >
                     </v-card-media>
                     <v-card-text>
-                        <div><p style="font-size:15px info--text"><strong>29th jul 2018</strong></p></div>
+                        <div><p style="font-size:15px info--text"><strong>{{meetup.date}}</strong></p></div>
                         <p>Lorem ipsum dolor sit, amet consectetur adipisicing 
                             elit. Voluptas veritatis sed quidem esse aut. 
                             Eaque amet nisi sequi asperiores pariatur 
@@ -29,3 +29,13 @@
         </v-layout>
     </v-container>
 </template>
+<script>
+export default {
+    computed:{
+        meetup(){
+            return this.$store.getters.loadedMeetup(this.$route.params.id)
+        },
+    }
+}
+</script>
+

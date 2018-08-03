@@ -5,7 +5,7 @@
                 <v-btn class="blue lighten-1" large to="/meetups">Explore Meetups</v-btn>
             </v-flex>
             <v-flex class="text-xs-center text-lg-left" xs12 sm6>
-                <v-btn class="blue lighten-1" large to="/meetups/new">Explore Meetups</v-btn>
+                <v-btn class="blue lighten-1" large to="/meetups/new">Organize Meetups</v-btn>
             </v-flex>
         </v-layout>
             <v-layout wrap row class="mt-3">
@@ -27,7 +27,7 @@
                 </v-carousel>
             </v-flex>
         </v-layout>
-        <v-layout row wrap class="mt-3">
+        <v-layout row wrap class="mt-1">
             <v-flex class="text-sm-center">
                 <p>Welcome to Meetup.com</p>
             </v-flex>
@@ -36,13 +36,9 @@
 </template>
 <script>
 export default {
-    data(){
-        return{
-            meetups:[
-                { imageUrl: 'https://www.planwallpaper.com/static/images/96d186ef9ae1d063b50bc1d9a03af5cc--mobile-wallpaper-photo-wallpaper.jpg', id: '1234567', title: 'some text'},
-                { imageUrl: 'https://www.planwallpaper.com/static/images/2015-wallpaper_111525594_269.jpg', id: '1234568', title: 'some arbitary text'},
-                { imageUrl: 'https://www.planwallpaper.com/static/images/4442617-hd-wallpapers.jpg', id: '1234569', title: 'a small text'}
-            ]
+    computed: {
+        meetups (){
+            return this.$store.getters.loadedMeetups
         }
     },
     methods: {

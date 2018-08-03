@@ -45,7 +45,7 @@ export default {
       sideMenu:false,
       menuItems:[
         { icon: 'supervisor_account', title: 'View Meetup' ,link: '/meetups'},
-        { icon: 'room', title: 'Organize!',link: '/meetups/new'},
+        { icon: 'room', title: 'Organize',link: '/meetups/new'},
         { icon: 'person',title: 'Profile',link: '/profile'},
         { icon: 'face',title: 'Sign up',link: '/signup'},
         { icon: 'lock_open',title: 'Sign out',link: '/signin'}
