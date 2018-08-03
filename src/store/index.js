@@ -34,7 +34,9 @@ export const store = new Vuex.Store({
         },
     },
     actions :{
-
+        createMeetup(context,payload){
+            context.commit('createMeetup',payload)
+        }
     },
     getters: {
         loadedMeetups(state){

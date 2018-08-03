@@ -5,7 +5,7 @@
                 <h3 class="primary--text">Create a new Meetup</h3>
             </v-flex>
             <v-flex>
-                <form >
+                <form @submit.prevent="createMeetup()" >
                     <v-layout>
                         <v-flex xs12 sm6 offset-sm1 >
                             <v-text-field
@@ -60,7 +60,7 @@
                     </v-layout>
                     <v-layout row>
                         <v-flex xs12 sm6 offset-sm1>
-                            <v-btn class="primary" :disabled="formIsValid ==! false">
+                            <v-btn class="primary" :disabled="formIsValid ==! false" type="submit">
                                 Create Your MeetUp
                             </v-btn>
                         </v-flex>
@@ -86,6 +86,18 @@ export default {
             this.imageUrl == '' || 
             this.description == '' ||
             this.location == ''
+        }
+    },
+    methods:{
+        createMeetup(){
+            this.$store.dispatch('createMeetup',{
+                title: this.title,
+                location: this.location,
+                imageUrl: this.imageUrl,
+                description: this.description,
+                date: new Date(),
+            })
+
         }
     }
 }
