@@ -6,21 +6,26 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
     state: {
         loadedMeetups: [
-            { imageUrl: 'https://www.planwallpaper.com/static/images/96d186ef9ae1d063b50bc1d9a03af5cc--mobile-wallpaper-photo-wallpaper.jpg',
-              id: '1234567',
-              title: 'some text',
-              date: '2012-02-02',
-
+            {   imageUrl: 'https://www.planwallpaper.com/static/images/96d186ef9ae1d063b50bc1d9a03af5cc--mobile-wallpaper-photo-wallpaper.jpg',
+                id: '1234567',
+                title: 'some text',
+                location: 'some location',
+                description: 'some description',
+                date: '2012-02-02',                    
             },
-            { imageUrl: 'https://www.planwallpaper.com/static/images/2015-wallpaper_111525594_269.jpg',
-              id: '1234568',
-              title: 'some arbitary text',
-              date: '2015-07-02'
+            {   imageUrl: 'https://www.planwallpaper.com/static/images/2015-wallpaper_111525594_269.jpg',
+                id: '1234568',
+                title: 'some arbitary text',
+                location: 'some location',
+                description: 'some description',  
+                date: '2015-07-02',       
             },
-            { imageUrl: 'https://www.planwallpaper.com/static/images/4442617-hd-wallpapers.jpg',
-              id: '1234569',
-              title: 'a small text',
-              date: '2011-04-08'
+            {   imageUrl: 'https://www.planwallpaper.com/static/images/4442617-hd-wallpapers.jpg',
+                id: '1234569',
+                title: 'a small text',
+                location: 'some location',
+                description: 'some description' ,
+                date: '2011-04-08',           
             },
         ],
         users: {

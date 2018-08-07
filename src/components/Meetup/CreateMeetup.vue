@@ -48,16 +48,34 @@
                     </v-layout>
                      <v-layout>
                         <v-flex xs12 sm6 offset-sm1>
-                            <v-text-field
+                            <v-textarea
                             name="description"
                             label="Description"
                             id="description"
                             required
                             multi-line
                             rows="3"
-                            v-model="description"></v-text-field>
+                            v-model="description"></v-textarea>
                         </v-flex>
                     </v-layout>
+                    <v-layout row>
+                        <v-flex xs12 sm6 offset-sm1>
+                            <h3>Choose Date & Time</h3>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row>
+                        <v-flex xs12 sm6 offset-sm1 class="mb-3">
+                            <v-date-picker  v-model="date"></v-date-picker>
+                            {{date | date}}
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row>
+                        <v-flex xs12 sm6 offset-sm1>
+                            <v-time-picker v-model="time" format="ampm"></v-time-picker>
+                            {{time}}
+                        </v-flex>
+                    </v-layout>
+                    {{onDate | date}}
                     <v-layout row>
                         <v-flex xs12 sm6 offset-sm1>
                             <v-btn class="primary" :disabled="formIsValid ==! false" type="submit">
@@ -78,6 +96,8 @@ export default {
             imageUrl: '',
             location: '',
             description: '',
+            date: null,
+            time: new Date(),
         }
     },
     computed: {
@@ -86,17 +106,38 @@ export default {
             this.imageUrl == '' || 
             this.description == '' ||
             this.location == ''
+        },
+        onDate(){
+            const date = new Date(this.date)
+            
+            if (typeof this.time === 'string') {
+            
+            var hours = this.time.match(/^(\d+)/)[1]
+            hours=parseInt(hours)+1
+            const minutes = this.time.match(/:(\d+)/)[1]
+            date.setHours(hours)
+            date.setMinutes(minutes)
+            } else {
+            date.setHours(this.time.getHours()+1)
+            date.setMinutes(this.time.getMinutes())
+            }
+            return date
         }
     },
     methods:{
         createMeetup(){
+            // if(!formIsValid){
+            //     return
+            // }
             this.$store.dispatch('createMeetup',{
                 title: this.title,
                 location: this.location,
                 imageUrl: this.imageUrl,
                 description: this.description,
-                date: new Date(),
+                date: this.onDate,
+                id: Math.floor(Math.random()*10000)
             })
+            this.$router.push('/meetups')
 
         }
     }

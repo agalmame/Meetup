@@ -6,7 +6,9 @@ import router from './router'
 import Vuetify from 'vuetify'
 import {store} from './store/index'
 import 'vuetify/dist/vuetify.min.css'
+import DateF from './filters/Date'
 
+Vue.filter('date',DateF)
 Vue.use(Vuetify, { theme: {
   primary: '#ee44aa',
   secondary: '#424242',
