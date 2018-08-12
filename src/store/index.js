@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import * as firebase from 'firebase'
 
 Vue.use(Vuex)
 
@@ -28,20 +29,72 @@ export const store = new Vuex.Store({
                 date: '2011-04-08',           
             },
         ],
-        users: {
-            id: '123456789a',
-            registeredMeetups: ['1234568']
-        }
+        users: null,
+        loading: false,
+        error: null,
     },
     mutations: {
         createMeetup(state,payload){
             state.loadedMeetups.push(payload)
         },
+        setUser(state,payload){
+            state.users=payload
+        },
+        setLoading(state,payload){
+            state.loading=payload 
+        },
+        setError(state,payload){
+            state.error=payload 
+        },
+        clearError(state){
+            state.error=null
+        }
     },
     actions :{
         createMeetup(context,payload){
             context.commit('createMeetup',payload)
-        }
+        },
+        signUserUp(context,payload){
+            context.commit('setLoading',true)
+            firebase.auth().createUserWithEmailAndPassword(payload.email,payload.password).then(
+                user=>{
+                    const newUser = {
+                        id: user.uid,
+                        registeredMeetups: [],
+                    }
+                    context.commit('setUser',newUser)
+                    context.commit('setLoading',false)
+                } 
+            )
+            .catch(
+                error => {
+                    context.commit('setLoading',false)
+                    context.commit('setError',error)
+                    console.log(error)
+                }
+            )
+        },
+        signUserIn(context,payload){
+            context.commit('setLoading',true)
+            firebase.auth().signInWithEmailAndPassword(payload.email,payload.password)
+            .then(
+                user=>{
+                    const newUser = {
+                        id: user.uid,
+                        registeredMeetups: [],
+                    }
+                    context.commit('setUser',newUser)
+                    context.commit('setLoading',false)
+                }
+            )
+            .catch(
+                error => {
+                    context.commit('setError',error)
+                    context.commit('setLoading',false)
+                    console.log(error)
+                }
+            )
+        },
     },
     getters: {
         loadedMeetups(state){
@@ -56,7 +109,16 @@ export const store = new Vuex.Store({
                 })
             }
             
-        }
+        },
+        user (state){
+            return state.users
+        },
+        error(state){
+            return state.error
+        },
+        loading(state){
+            return state.loading
+        },
 
     },
 })

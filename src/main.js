@@ -4,9 +4,11 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Vuetify from 'vuetify'
+import { initializeApp } from 'firebase'
 import {store} from './store/index'
 import 'vuetify/dist/vuetify.min.css'
 import DateF from './filters/Date'
+import Alert from './components/shared/Alert'
 
 Vue.filter('date',DateF)
 Vue.use(Vuetify, { theme: {
@@ -18,6 +20,7 @@ Vue.use(Vuetify, { theme: {
   success: '#4CAF50',
   warning: '#FFC107'
 }})
+Vue.component('app-alert',Alert)
 
 Vue.config.productionTip = false
 
@@ -27,5 +30,16 @@ new Vue({
   router,
   store,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+  created () {
+    initializeApp({
+      apiKey: 'AIzaSyD5UHAoDjMFiI9r3rrWjblY76A4BXKlnyE',
+      authDomain: 'meetups-af271.firebaseapp.com',
+      databaseURL: 'https://meetups-af271.firebaseio.com',
+      projectId: 'meetups-af271',
+      storageBucket: 'meetups-af271.appspot.com',
+    })
+  }
 })
+
+
