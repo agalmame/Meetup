@@ -5,7 +5,7 @@
                 <h3 class="primary--text">Create a new Meetup</h3>
             </v-flex>
             <v-flex>
-                <form @submit.prevent="createMeetup()" >
+                <form @submit.prevent="createMeetup" >
                     <v-layout>
                         <v-flex xs12 sm6 offset-sm1 >
                             <v-text-field
@@ -66,7 +66,7 @@
                     <v-layout row>
                         <v-flex xs12 sm6 offset-sm1 class="mb-3">
                             <v-date-picker  v-model="date"></v-date-picker>
-                            {{date | date}}
+                            
                         </v-flex>
                     </v-layout>
                     <v-layout row>
@@ -75,7 +75,7 @@
                             {{time}}
                         </v-flex>
                     </v-layout>
-                    {{onDate | date}}
+                    
                     <v-layout row>
                         <v-flex xs12 sm6 offset-sm1>
                             <v-btn class="primary" :disabled="formIsValid ==! false" type="submit">
@@ -109,9 +109,7 @@ export default {
         },
         onDate(){
             const date = new Date(this.date)
-            
             if (typeof this.time === 'string') {
-            
             var hours = this.time.match(/^(\d+)/)[1]
             hours=parseInt(hours)+1
             const minutes = this.time.match(/:(\d+)/)[1]
@@ -135,7 +133,6 @@ export default {
                 imageUrl: this.imageUrl,
                 description: this.description,
                 date: this.onDate,
-                id: Math.floor(Math.random()*10000)
             })
             this.$router.push('/meetups')
 

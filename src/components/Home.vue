@@ -8,7 +8,19 @@
                 <v-btn class="blue lighten-1" large to="/meetups/new">Organize Meetups</v-btn>
             </v-flex>
         </v-layout>
-            <v-layout wrap row class="mt-3">
+        <v-layout row>
+            <v-flex class="text-xs-center">
+                <v-progress-circular
+                    :size="70"
+                    :width="7"
+                    color="pink lighten-1"
+                    v-if="onLoading"
+                    indeterminate
+                >
+                </v-progress-circular>
+            </v-flex>
+        </v-layout>
+        <v-layout wrap row class="mt-3" v-if="!onLoading">
             <v-flex>
                 <v-carousel>
                     <v-carousel-item
@@ -39,13 +51,15 @@ export default {
     computed: {
         meetups (){
             return this.$store.getters.loadedMeetups
+        },
+        onLoading(){
+            return this.$store.getters.loading
         }
     },
     methods: {
         onLoadMeetup (id){
          this.$router.push('/meetups/' +id)
         }
-
     }
 }
 </script>

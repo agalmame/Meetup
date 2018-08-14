@@ -1,6 +1,6 @@
-<template>
+<template >
   <v-app>
-
+  
     <v-navigation-drawer  fixed v-model="sideMenu" class="hidden-sm-and-up">
        <v-list>
         <v-list-tile 
@@ -37,7 +37,6 @@
     </main>
   </v-app>
 </template>
-
 <script>
 export default {
   data () {
