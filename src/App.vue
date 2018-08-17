@@ -12,6 +12,14 @@
           </v-list-tile-action>
           <v-list-tile-content>{{Item.title}}</v-list-tile-content>
         </v-list-tile>
+        <v-list-tile 
+         v-if="isAuthenticated"
+         @click="onLogout">
+          <v-list-tile-action>
+            <v-icon>exit_to_app</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>Logout</v-list-tile-content>
+        </v-list-tile>
       </v-list>
     </v-navigation-drawer>
 
@@ -20,14 +28,22 @@
       <v-toolbar-title><router-link to="/" tag="span" style="cursor: pointer">Meetup</router-link></v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items 
-         v-for="item in menuItems"
-         :key="item.title"
+
          class="hidden-xs-only">
         <v-btn
           flat
+          v-for="item in menuItems"
+          :key="item.title"
           :to="item.link">
           <v-icon left >{{item.icon}}</v-icon>
           {{item.title}}
+        </v-btn>
+        <v-btn v-if="isAuthenticated"
+          flat
+          @click="onLogout"
+          >
+          <v-icon left >exit_to_app</v-icon>
+          Logout
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
@@ -62,6 +78,11 @@ export default {
     isAuthenticated(){
       return this.$store.getters.user !== null && this.$store.getters.user !== undefined
     }
+    },
+    methods:{
+      onLogout(){
+        this.$store.dispatch('logout')
+      }
     }
   }
   name: 'App'

@@ -13,7 +13,7 @@
                     </v-card-media>
                     <v-card-text>
                         <div><p style="font-size:15px info--text"><strong>{{meetup.date | date}}-{{meetup.location}}</strong></p></div>
-                        <p>{{meetup.description}}}.</p>
+                        <p>{{meetup.description}}.</p>
                     </v-card-text>
                     
                     <v-card-actions>

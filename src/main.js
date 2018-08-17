@@ -4,7 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Vuetify from 'vuetify'
-import { initializeApp } from 'firebase'
+import { initializeApp, auth } from 'firebase'
 import {store} from './store/index'
 import 'vuetify/dist/vuetify.min.css'
 import DateF from './filters/Date'
@@ -38,6 +38,11 @@ new Vue({
       databaseURL: 'https://meetups-af271.firebaseio.com',
       projectId: 'meetups-af271',
       storageBucket: 'meetups-af271.appspot.com',
+    })
+    auth().onAuthStateChanged((user) => {
+      if(user){
+        this.$store.dispatch('autoSignin', user)
+      }
     })
     this.$store.dispatch('loadedMeetups')
   }

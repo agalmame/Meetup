@@ -26,26 +26,24 @@
                             v-model="location"></v-text-field>
                         </v-flex>
                     </v-layout>
-                     <v-layout wrap row>
+                    <v-layout row>
                         <v-flex xs12 sm6 offset-sm1>
-                            <v-text-field
-                            name="imageUrl"
-                            label="ImageUrl"
-                            id="imageUrl"
-                            required
-                            v-model="imageUrl"></v-text-field>
+                            <v-btn raised
+                            class="pink lighten-1"
+                            @click="onPickFile"
+                            >Update Image</v-btn>
+                            <input type="file"
+                            style="display:none"
+                            ref="fileRef"
+                            accept="image/*"
+                            @change="onFilePicked">
                         </v-flex>
-                        <v-layout row wrap>
+                    </v-layout>
+                        <v-layout>
                             <v-flex xs12 sm6 offset-sm1>
-                                <img 
-                                :src="imageUrl" 
-                                alt="your image"
-                                height="200px"
-                                width="200px"
-                                >
+                                <img :src ="imageUrl" alt="image" height="250"/>
                             </v-flex>
                         </v-layout>
-                    </v-layout>
                      <v-layout>
                         <v-flex xs12 sm6 offset-sm1>
                             <v-textarea
@@ -98,14 +96,15 @@ export default {
             description: '',
             date: null,
             time: new Date(),
+            image: null,
         }
     },
     computed: {
         formIsValid() {
             return this.title == '' || 
-            this.imageUrl == '' || 
-            this.description == '' ||
-            this.location == ''
+                this.imageUrl == '' || 
+                this.description == '' ||
+                this.location == ''
         },
         onDate(){
             const date = new Date(this.date)
@@ -124,18 +123,34 @@ export default {
     },
     methods:{
         createMeetup(){
-            // if(!formIsValid){
+            // if(!formIsValid || !this.image){
             //     return
             // }
             this.$store.dispatch('createMeetup',{
                 title: this.title,
                 location: this.location,
-                imageUrl: this.imageUrl,
+                image: this.image,
                 description: this.description,
                 date: this.onDate,
             })
             this.$router.push('/meetups')
 
+        },
+        onPickFile(){
+            this.$refs.fileRef.click();
+        },
+        onFilePicked(event){
+            const files = event.target.files
+            let fileName = files[0].name
+            if(fileName.lastIndexOf('.') <= 0){
+                return alert('Please add a valide file')
+            }
+            const fileReader = new FileReader()
+            fileReader.onload = (event)=>{
+                this.imageUrl = event.target.result
+            }
+            fileReader.readAsDataURL(files[0])
+            this.image = files[0]
         }
     }
 }
