@@ -21,6 +21,20 @@ export const store = new Vuex.Store({
         setUser(state,payload){
             state.users=payload
         },
+        updateMeetup(state,payload){
+            const meetup = state.loadedMeetups.find(meetup=>{
+                return meetup.id === payload.id
+            })
+            if(payload.title){
+                meetup.title=payload.title
+            }
+            if(payload.description){
+                meetup.description=payload.description
+            }
+            if(payload.date){
+                meetup.date=payload.date
+            }
+        },
         setLoading(state,payload){
             state.loading=payload 
         },
@@ -145,6 +159,27 @@ export const store = new Vuex.Store({
                     console.log(error)
                 }
             )
+        },
+        updateMeetupData(context,payload){
+            context.commit('setLoading',true)
+            const updateObj = {}
+            if(payload.title){
+                updateObj.title=payload.title
+            }
+            if(payload.description){
+                updateObj.description=payload.description
+            }
+            if(payload.date){
+                updateObj.date=payload.date
+            }
+            database().ref('myMeetups').child(payload.id).update({title:updateObj.title,description: updateObj.description})
+            .then(()=>{
+                context.commit('updateMeetup',payload)
+                context.commit('setLoading',false)
+            })
+            .catch(err=>{
+                console.log(err)
+            })
         },
         autoSignin(context,payload){
             context.commit('setUser',{id: payload.uid, registeredMeetups: []})

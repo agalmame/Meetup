@@ -5,6 +5,8 @@
                 <v-card>
                     <v-card-title>
                         <h3 class="primary--text">{{meetup.title}}</h3>
+                        <v-spacer></v-spacer>
+                        <app-editMeetup v-if="onOwner" :theMeetup="meetup"></app-editMeetup>
                     </v-card-title>
                     <v-card-media
                     :src="meetup.imageUrl"
@@ -31,6 +33,15 @@ export default {
         meetup(){
             return this.$store.getters.loadedMeetup(this.$route.params.id)
         },
+        isAuthenticated(){
+            return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+        },
+        onOwner(){
+            if(!this.isAuthenticated){
+                return false
+            }
+            return this.$store.getters.user.id == this.meetup.creatorId
+        }
     }
 }
 </script>

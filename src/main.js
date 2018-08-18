@@ -9,6 +9,7 @@ import {store} from './store/index'
 import 'vuetify/dist/vuetify.min.css'
 import DateF from './filters/Date'
 import Alert from './components/shared/Alert'
+import Dialog from './components/Meetup/EditMeetup.vue'
 
 Vue.filter('date',DateF)
 Vue.use(Vuetify, { theme: {
@@ -21,6 +22,7 @@ Vue.use(Vuetify, { theme: {
   warning: '#FFC107'
 }})
 Vue.component('app-alert',Alert)
+Vue.component('app-editMeetup',Dialog)
 
 Vue.config.productionTip = false
 
