@@ -6,7 +6,7 @@
                     <v-card-title>
                         <h3 class="primary--text">{{meetup.title}}</h3>
                         <v-spacer></v-spacer>
-                        <app-editMeetup v-if="onOwner" :theMeetup="meetup"></app-editMeetup>
+                        <app-edit-meetup-title v-if="onOwner" :theMeetup="meetup"></app-edit-meetup-title>
                     </v-card-title>
                     <v-card-media
                     :src="meetup.imageUrl"
@@ -15,6 +15,9 @@
                     </v-card-media>
                     <v-card-text>
                         <div><p style="font-size:15px info--text"><strong>{{meetup.date | date}}-{{meetup.location}}</strong></p></div>
+                        <v-spacer></v-spacer>
+                        <app-edit-meetup-date v-if="onOwner" :meetup="meetup"></app-edit-meetup-date>
+                        <app-edit-meetup-time v-if="onOwner" :meetup="meetup"></app-edit-meetup-time>
                         <p>{{meetup.description}}.</p>
                     </v-card-text>
                     

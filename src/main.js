@@ -8,8 +8,10 @@ import { initializeApp, auth } from 'firebase'
 import {store} from './store/index'
 import 'vuetify/dist/vuetify.min.css'
 import DateF from './filters/Date'
-import Alert from './components/shared/Alert'
-import Dialog from './components/Meetup/EditMeetup.vue'
+import Alert from './components/shared/Alert.vue'
+import DialogTitle from './components/Meetup/Edit/EditTitle.vue'
+import DialogDate from './components/Meetup/Edit/EditDate.vue'
+import DialogTime from './components/Meetup/Edit/EditTime.vue'
 
 Vue.filter('date',DateF)
 Vue.use(Vuetify, { theme: {
@@ -22,7 +24,9 @@ Vue.use(Vuetify, { theme: {
   warning: '#FFC107'
 }})
 Vue.component('app-alert',Alert)
-Vue.component('app-editMeetup',Dialog)
+Vue.component('app-edit-meetup-title',DialogTitle)
+Vue.component('app-edit-meetup-date',DialogDate)
+Vue.component('app-edit-meetup-time',DialogTime)
 
 Vue.config.productionTip = false
 

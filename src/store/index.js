@@ -172,7 +172,7 @@ export const store = new Vuex.Store({
             if(payload.date){
                 updateObj.date=payload.date
             }
-            database().ref('myMeetups').child(payload.id).update({title:updateObj.title,description: updateObj.description})
+            database().ref('myMeetups').child(payload.id).update(updateObj)
             .then(()=>{
                 context.commit('updateMeetup',payload)
                 context.commit('setLoading',false)
@@ -211,6 +211,5 @@ export const store = new Vuex.Store({
         loading(state){
             return state.loading
         },
-
     },
 })
