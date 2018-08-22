@@ -12,6 +12,7 @@ import Alert from './components/shared/Alert.vue'
 import DialogTitle from './components/Meetup/Edit/EditTitle.vue'
 import DialogDate from './components/Meetup/Edit/EditDate.vue'
 import DialogTime from './components/Meetup/Edit/EditTime.vue'
+import DialogRegister from './components/Meetup/Registration/RegistrationDialog.vue'
 
 Vue.filter('date',DateF)
 Vue.use(Vuetify, { theme: {
@@ -27,6 +28,7 @@ Vue.component('app-alert',Alert)
 Vue.component('app-edit-meetup-title',DialogTitle)
 Vue.component('app-edit-meetup-date',DialogDate)
 Vue.component('app-edit-meetup-time',DialogTime)
+Vue.component('app-register',DialogRegister)
 
 Vue.config.productionTip = false
 
@@ -48,6 +50,7 @@ new Vue({
     auth().onAuthStateChanged((user) => {
       if(user){
         this.$store.dispatch('autoSignin', user)
+        this.$store.dispatch('fetchUserData')
       }
     })
     this.$store.dispatch('loadedMeetups')

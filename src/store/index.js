@@ -12,6 +12,21 @@ export const store = new Vuex.Store({
         error: null,
     },
     mutations: {
+        registerUserToMeetup(state,payload){
+            if(state.users.registeredMeetups.findIndex(id=>{return id== payload.id}) >= 0){
+                return
+            }
+            state.users.registeredMeetups.push(payload.id)
+            console.log('test')
+            state.users.fbKeys[payload.id]=payload.fbKey
+        },
+        UnregisterUserFromMeetup(state,payload){
+            const registedMeetup = state.users.registeredMeetups
+            registedMeetup.splice(registedMeetup.findIndex(m=>{
+                return m.id==payload
+            }),1)
+            Reflect.deleteProperty(state.users.fbKeys,payload)
+        },
         setLoadedMeetups(state,payload){
             state.loadedMeetups = payload
         },
@@ -46,6 +61,35 @@ export const store = new Vuex.Store({
         }
     },
     actions :{
+        registerUserToMeetup(context,payload){
+            context.commit('setLoading',true)
+            const  user = context.getters.user
+            database().ref('/users/'+user.id).child('/registration/')
+            .push(payload)
+            .then(data=>{
+                context.commit('setLoading',false)
+                context.commit('registerUserToMeetup',{id: payload, fbKey: data.key })
+            })
+            .catch(err=>{
+                context.commit('setLoading',false)
+                console.log(err)
+            })
+        },
+        UnregisterUserFromMeetup(context,payload){
+            context.commit('setLoading',true)
+            const user = context.getters.user
+            if(!user.fbKeys) return
+            const fbkey = user.fbKeys[payload]
+            database().ref('users/'+user.id+'/registration').child(fbkey).remove()
+            .then(()=>{
+                context.commit('setLoading',false)
+                context.commit('UnregisterUserFromMeetup',payload)
+            })
+            .catch(err=>{
+                context.commit('setLoading',false)
+                console.log(err)
+            })
+        },
         loadedMeetups(context){
             context.commit('setLoading',true)
             database().ref('myMeetups').once('value')
@@ -126,6 +170,7 @@ export const store = new Vuex.Store({
                     const newUser = {
                         id: user.uid,
                         registeredMeetups: [],
+                        fbKeys:{},
                     }
                     context.commit('setUser',newUser)
                     context.commit('setLoading',false)
@@ -147,6 +192,7 @@ export const store = new Vuex.Store({
                     const newUser = {
                         id: user.uid,
                         registeredMeetups: [],
+                        fbKeys:{},
                     }
                     context.commit('setUser',newUser)
                     context.commit('setLoading',false)
@@ -182,10 +228,35 @@ export const store = new Vuex.Store({
             })
         },
         autoSignin(context,payload){
-            context.commit('setUser',{id: payload.uid, registeredMeetups: []})
+            context.commit('setUser',{id: payload.uid, registeredMeetups: [], fbKeys: {}})
+        },
+        fetchUserData(context){
+            context.commit('setLoading',true)
+            database().ref('/users/'+context.getters.user.id+'/registration/').once('value')
+            .then(data=>{
+                const pairsMeetup = data.val()
+                let registrationMeetup = []
+                let swapperdPairs ={}
+                for(let key in pairsMeetup){
+                    registrationMeetup.push(pairsMeetup[key])
+                    swapperdPairs[pairsMeetup[key]] = key
+                }
+                const updatedUser = {
+                    id: context.getters.user.id,
+                    registeredMeetups: registrationMeetup,
+                    fbKeys: swapperdPairs,
+                }
+                context.commit('setUser',updatedUser)
+                context.commit('setLoading',false)
+
+            })
+            .catch(err=>{
+                console.log(err)
+                context.commit('setLoading',false)})
+
         },
         logout(context){
-            auth().logout()
+            auth().signOut()
             context.commit('setUser', null)
         }
     },

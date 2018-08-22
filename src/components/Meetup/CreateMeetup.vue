@@ -44,7 +44,7 @@
                                 <img :src ="imageUrl" alt="image" height="250"/>
                             </v-flex>
                         </v-layout>
-                     <v-layout>
+                     <v-layout> 
                         <v-flex xs12 sm6 offset-sm1>
                             <v-textarea
                             name="description"

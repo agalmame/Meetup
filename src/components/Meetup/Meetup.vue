@@ -23,7 +23,7 @@
                     
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn class="pink ligthen-3">Register</v-btn>
+                        <app-register v-if="isAuthenticated" :meetupId="meetup.id"></app-register>
                     </v-card-actions>
                 </v-card>
             </v-flex>
